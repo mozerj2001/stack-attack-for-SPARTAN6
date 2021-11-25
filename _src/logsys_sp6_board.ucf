@@ -1,0 +1,167 @@
+# LOGSYS XC6SLX9-2TQG144C Demo Board FPGA lábkiosztás v1.0
+# A fájl az összes jelet tartlmazza, a kivezetés specifikációkat
+# inaktív, megjegyzés állapotban tartva.
+# Egy adott projektben csak a ténylegesen használt jeleket aktíváljuk,
+# elkerülendõ az ERROR és WARNING üzeneteket.
+
+# A VccAUX tápfeszültség 3,3 V.
+CONFIG VCCAUX=3.3;
+
+# 50 MHz órajelgenerátor
+NET clk50M LOC=P55 | IOSTANDARD=LVCMOS33 | TNM_NET=tnm_clk50M;
+TIMESPEC TS_clk50M = PERIOD tnm_clk50M 50000 kHz;
+
+# Manuális RST nyomógomb (aktív alacsony)
+NET rstbt  LOC=P67 | IOSTANDARD=LVCMOS33 | PULLUP | TIG;
+
+
+# A LOGSYS fejlesztõi port vonalai.
+#NET dev_mosi       LOC=P104 | IOSTANDARD=LVCMOS33;
+#NET dev_miso       LOC=P144 | IOSTANDARD=LVCMOS33; 
+#NET dev_clk        LOC=P95  | IOSTANDARD=LVCMOS33; 
+#NET dev_rst        LOC=P94  | IOSTANDARD=LVCMOS33;
+
+
+# 3 darab aktív magas nyomógomb, balról jobbra számozva.
+NET bt<2>          LOC=P61  | IOSTANDARD=LVCMOS33 | PULLDOWN;  
+NET bt<1>          LOC=P62  | IOSTANDARD=LVCMOS33 | PULLDOWN;  
+NET bt<0>          LOC=P66  | IOSTANDARD=LVCMOS33 | PULLDOWN;
+
+
+# A CPLD interfész vonalai. A cpld_jtagen jelet
+# mindig logikai alacsony szinttel hajtsuk meg!
+NET cpld_jtagen    LOC=P82  | IOSTANDARD=LVCMOS33;
+NET cpld_rstn      LOC=P74  | IOSTANDARD=LVCMOS33;
+NET cpld_clk       LOC=P78  | IOSTANDARD=LVCMOS33;
+NET cpld_load      LOC=P80  | IOSTANDARD=LVCMOS33;
+NET cpld_mosi      LOC=P81  | IOSTANDARD=LVCMOS33;
+NET cpld_miso      LOC=P79  | IOSTANDARD=LVCMOS33;
+
+
+# Az SPI interfész vonalai. A nem használt SPI perifériák
+# kiválasztó jeleit logikai magas szinttel hajtsuk meg!
+NET spi_sdcard_csn LOC=P75  | IOSTANDARD=LVCMOS33;
+NET spi_flash_csn  LOC=P38  | IOSTANDARD=LVCMOS33;
+NET spi_lcd_csn    LOC=P69  | IOSTANDARD=LVCMOS33;
+#NET spi_mosi       LOC=P64  | IOSTANDARD=LVCMOS33;
+#NET spi_miso       LOC=P65  | IOSTANDARD=LVCMOS33;
+#NET spi_clk        LOC=P70  | IOSTANDARD=LVCMOS33;
+
+
+# SRAM és SDRAM memóriák. A nem használt memóriák
+# kiválasztó jeleit logikai magas szinttel hajtsuk meg!
+#NET mem_addr<0>    LOC=P45  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<1>    LOC=P46  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<2>    LOC=P47  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<3>    LOC=P48  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<4>    LOC=P59  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<5>    LOC=P58  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<6>    LOC=P57  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<7>    LOC=P56  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<8>    LOC=P51  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<9>    LOC=P50  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<10>   LOC=P44  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<11>   LOC=P41  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<12>   LOC=P40  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_addr<13>   LOC=P39  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST; #SDRAM BA0
+#NET mem_addr<14>   LOC=P43  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST; #SDRAM BA1
+#NET mem_addr<15>   LOC=P33  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST; #SDRAM /RAS
+#NET mem_addr<16>   LOC=P34  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST; #SDRAM /CAS
+#NET mem_addr<17>   LOC=P60  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+
+#NET mem_data<0>    LOC=P6   | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<1>    LOC=P8   | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<2>    LOC=P10  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<3>    LOC=P12  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<4>    LOC=P15  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<5>    LOC=P17  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<6>    LOC=P22  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<7>    LOC=P24  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<8>    LOC=P23  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<9>    LOC=P21  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<10>   LOC=P16  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<11>   LOC=P14  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<12>   LOC=P11  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<13>   LOC=P9   | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<14>   LOC=P7   | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+#NET mem_data<15>   LOC=P5   | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST | KEEPER;
+
+#NET mem_wen        LOC=P29  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_lbn        LOC=P27  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET mem_ubn        LOC=P26  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+
+#NET sram_csn       LOC=P1   | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET sram_oen       LOC=P2   | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+
+#NET sdram_clk      LOC=P30  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET sdram_cke      LOC=P32  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+#NET sdram_csn      LOC=P35  | IOSTANDARD=LVTTL | DRIVE=8 | SLEW=FAST;
+
+
+# LOGSYS "A" bõvítõcsatlakozó (szembõl nézve a 20 pólusú
+# csatlakozó nem használható pontjait x-el jelölve).
+#  --------------------------------------------------------
+# |  x |aio15|aio13|aio11|aio9 |aio7 |aio5 | 3V3 |GND |  x |
+#  --------------------------------------------------------
+# |  x |aio16|aio14|aio12|aio10|aio8 |aio6 |aio4 | 5V |  x |
+#  --------------------------------------------------------
+
+#NET aio<16>  LOC=P126 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 6N
+#NET aio<15>  LOC=P127 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 6P
+#NET aio<14>  LOC=P131 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 5N
+#NET aio<13>  LOC=P132 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 5P
+NET "hsync"  LOC=P133 | IOSTANDARD=LVCMOS33; # Diff. 4N
+NET "vsync"  LOC=P134 | IOSTANDARD=LVCMOS33; # Diff. 4P
+NET "b0"	 	LOC=P137 | IOSTANDARD=LVCMOS33; # Diff. 3N
+NET "b1"   	LOC=P138 | IOSTANDARD=LVCMOS33; # Diff. 3P
+NET "g0"   	LOC=P139 | IOSTANDARD=LVCMOS33; # Diff. 2N
+NET "g1"   	LOC=P140 | IOSTANDARD=LVCMOS33; # Diff. 2P
+NET "r0"   	LOC=P141 | IOSTANDARD=LVCMOS33; # Diff. 1N
+NET "r1"   	LOC=P142 | IOSTANDARD=LVCMOS33; # Diff. 1P
+#NET aio<4>   LOC=P143 | PULLUP | IOSTANDARD=LVCMOS33; 
+
+
+# LOGSYS "B" bõvítõcsatlakozó (szembõl nézve a 20 pólusú
+# csatlakozó nem használható pontjait x-el jelölve).
+#  --------------------------------------------------------
+# |  x |bio15|bio13|bio11|bio9 |bio7 |bio5 | 3V3 |GND |  x |
+#  --------------------------------------------------------
+# |  x |bio16|bio14|bio12|bio10|bio8 |bio6 |bio4 | 5V |  x |
+#  --------------------------------------------------------
+
+#NET bio<16>  LOC=P84  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 6N
+#NET bio<15>  LOC=P85  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 6P
+#NET bio<14>  LOC=P87  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 5N
+#NET bio<13>  LOC=P88  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 5P
+#NET bio<12>  LOC=P92  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 4N
+#NET bio<11>  LOC=P93  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 4P
+#NET bio<10>  LOC=P97  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 3N
+#NET bio<9>   LOC=P98  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 3P
+#NET bio<8>   LOC=P99  | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 2N
+#NET bio<7>   LOC=P100 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 2P
+#NET bio<6>   LOC=P101 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 1N
+#NET bio<5>   LOC=P102 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 1P
+#NET bio<4>   LOC=P83  | PULLUP | IOSTANDARD=LVCMOS33;
+
+
+# LOGSYS "C" bõvítõcsatlakozó (szembõl nézve a 20 pólusú
+# csatlakozó nem használható pontjait x-el jelölve).
+#  --------------------------------------------------------
+# |  x |cio15|cio13|cio11|cio9 |cio7 |cio5 | 3V3 |GND |  x |
+#  --------------------------------------------------------
+# |  x |cio16|cio14|cio12|cio10|cio8 |cio6 |cio4 | 5V |  x |
+#  --------------------------------------------------------
+
+#NET cio<16>  LOC=P114 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 6N
+#NET cio<15>  LOC=P115 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 6P
+#NET cio<14>  LOC=P116 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 5N
+#NET cio<13>  LOC=P117 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 5P
+#NET cio<12>  LOC=P118 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 4N
+#NET cio<11>  LOC=P119 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 4P
+#NET cio<10>  LOC=P120 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 3N
+#NET cio<9>   LOC=P121 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 3P
+#NET cio<8>   LOC=P123 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 2N
+#NET cio<7>   LOC=P124 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 2P
+#NET cio<6>   LOC=P111 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 1N
+#NET cio<5>   LOC=P112 | PULLUP | IOSTANDARD=LVCMOS33; # Diff. 1P
+#NET cio<4>   LOC=P105 | PULLUP | IOSTANDARD=LVCMOS33;
