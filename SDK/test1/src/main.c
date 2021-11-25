@@ -20,16 +20,14 @@ int main()
 
 	setupObjects();
 
-	boxesArray[0].position.x = 0;
-	boxesArray[0].position.y = 0;
+	boxesArray[0].position.x = 50;
+	boxesArray[0].position.y = 50;
 	boxesArray[1].position.x = 100;
-	boxesArray[1].position.y = 100;
-	boxesArray[2].position.x = 100;
-	boxesArray[2].position.y = 20;
+	boxesArray[1].position.y = 60;
+	boxesArray[2].position.x = 0;
+	boxesArray[2].position.y = 80;
 
-	for(k = 0; k < 19200; k++){
-		*(FB_POINTER+k) = 0x00;
-	}
+
 
 
 
@@ -40,6 +38,96 @@ int main()
 		*DIG1_PTR = (cntr >> 4) & 0xF;		// counter shifted by 4, then masked
 		cntr++;
 
+		for(k = 0; k < 19200; k++){
+			*(FB_POINTER+k) = 0x00;
+		}
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[0].position);
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[1].position);
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[2].position);
+
+		for (i=0; i<10000000; i++);
+
+		characterToFB(playerC.pixels, playerC.position);
+
+		for (i=0; i<10000000; i++);
+		//===============================================//
+		for(k = 0; k < 19200; k++){
+			*(FB_POINTER+k) = 0x03;
+		}
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[0].position);
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[1].position);
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[2].position);
+
+		for (i=0; i<10000000; i++);
+
+		characterToFB(playerC.pixels, playerC.position);
+
+		for (i=0; i<10000000; i++);
+		//===============================================//
+
+		for(k = 0; k < 19200; k++){
+			*(FB_POINTER+k) = 0xB0;
+		}
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[0].position);
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[1].position);
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[2].position);
+
+		for (i=0; i<10000000; i++);
+
+		characterToFB(playerC.pixels, playerC.position);
+
+		for (i=0; i<10000000; i++);
+		//===============================================//
+
+		for(k = 0; k < 19200; k++){
+			*(FB_POINTER+k) = 0x30;
+		}
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[0].position);
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[1].position);
+
+		for (i=0; i<5000000; i++);
+
+		objectToFB(boxesArray[2].position);
+
+		for (i=0; i<10000000; i++);
+
+		characterToFB(playerC.pixels, playerC.position);
+
+		for (i=0; i<10000000; i++);
+
 		// writing to the Frame Buffer
 		/*for(i = 0; i < BOXES_COUNT; i++){
 			objectToFB(boxesArray[i].position);
@@ -48,24 +136,7 @@ int main()
 
 		//characterToFB(playerC.pixels, playerC.position);
 		//objectToFB(boxesArray[0].position);
-		objectToFB(boxesArray[1].position);
-		for (i=0; i<10000000; i++);
-		for(k = 0; k < 19200; k++){
-			*(FB_POINTER+k) = 0x30;
-		}
-		for (i=0; i<10000000; i++);
 
-		objectToFB(boxesArray[0].position);
-
-		for (i=0; i<10000000; i++);
-		for(k = 0; k < 19200; k++){
-			*(FB_POINTER+k) = 0x0C;
-		}
-		//characterToFB(playerC.pixels, playerC.position);
-		for (i=0; i<10000000; i++);
-		for(k = 0; k < 19200; k++){
-			*(FB_POINTER+k) = 0x03;
-		}
 	}
 
 }
