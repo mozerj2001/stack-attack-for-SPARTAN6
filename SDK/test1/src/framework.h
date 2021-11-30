@@ -21,14 +21,14 @@
 #include "structures.h"
 #include "xparameters.h"
 
+
 // How many boxes the game can handle.
-#define BOXES_COUNT 10 // 80 is the maximum number of 16x15 objects that fit on the screen.
+#define BOXES_COUNT 10 // Number of 8x8 objects to fit on the screen.
 
 // Declare global pointer to the starting address of the frame buffer.
 extern int* FB_POINTER;
 
-// Declare object variables. A maximum of 79 objects, excluding the character
-// can fit on the screen.
+// Declare object variables.
 extern struct object boxesArray[BOXES_COUNT];
 // Declare character variable.
 extern struct character playerC;

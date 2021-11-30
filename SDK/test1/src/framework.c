@@ -8,6 +8,7 @@
  *  declared in the framework header. These functions together are the "game engine".
  */
 
+#include "xparameters.h"
 #include "structures.h"
 #include "framework.h"
 
@@ -70,8 +71,8 @@ void setupObjects(){
 }
 ///////////////////////////////////////////////////////////////////////////////////
 void objectToFB(struct coords coordinates){
-	unsigned int m = 0;
-	unsigned int n = 0;
+	unsigned long int m = 0;
+	unsigned long int n = 0;
 	int* rowPtr = FB_POINTER + coordinates.y * 160;
 
 	for(n = 0; n < 8; n++){
@@ -117,10 +118,12 @@ void updateStates(){
 
 	for(; i < deployedBoxes; i++){
 
-		if(boxesArray[i].position.y == 112){ boxesArray[i].isFalling = 0; }
+		if(boxesArray[i].position.y == 90){
+			boxesArray[i].isFalling = 0;
+		}
 		else{
 			for(k = 0; k < deployedBoxes; k++){
-				if(((boxesArray[i].position.x / 8) == (boxesArray[k].position.x / 8)) && (boxesArray[k].position.y - boxesArray[i].position.y) <= 8){
+				if(i != k && ((boxesArray[i].position.x / 8) == (boxesArray[k].position.x / 8)) && (boxesArray[k].position.y - boxesArray[i].position.y) <= 8){
 					boxesArray[i].isFalling = 0;
 				}
 			}
@@ -140,8 +143,8 @@ void updatePositions(){
 	unsigned int i = 0;
 
 	for(; i < deployedBoxes; i++){
-		if(boxesArray[i].isFalling){
-			boxesArray[i].position.y--;
+		if(boxesArray[i].isFalling == 1){
+			boxesArray[i].position.y += 1;
 		}
 		else{
 			boxesArray[i].position.x += boxesArray[i].hspeed;

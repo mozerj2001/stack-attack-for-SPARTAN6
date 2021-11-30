@@ -21,8 +21,8 @@
  * */
 
 struct coords {
-	unsigned int x;
-	unsigned int y;
+	unsigned long int x;
+	unsigned long int y;
 };
 
 /*
