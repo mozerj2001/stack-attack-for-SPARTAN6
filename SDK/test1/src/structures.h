@@ -65,7 +65,7 @@ struct character {
 	int isFalling;
 	int isLeftBlocked;
 	int isRightBlocked;
-	unsigned int pixels[10][10];
+	unsigned int pixels[8][8];
 };
 
 

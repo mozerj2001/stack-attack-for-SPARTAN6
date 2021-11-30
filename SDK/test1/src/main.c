@@ -10,9 +10,9 @@
 
 int main(void)
 {
-	testStacking();
-	while(1){
 
+	while(1){
+		testCharacterDrawing();
 	}
 }
 

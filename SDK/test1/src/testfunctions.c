@@ -144,3 +144,43 @@ void testStacking(){
 		genCounter++;
 	}
 }
+
+void testCharacterDrawing(){
+
+	int cntr = 0;
+	int i;
+	int k = 0;
+
+	// random numbers for deployment test
+	//int posGen1 = 0;
+	int genCounter = 0;
+	struct coords deploymentTestLoc;
+
+	setupObjects();
+	while(1){
+		playerC.position.x = 0;
+		playerC.position.y = 0;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+		playerC.position.x = 50;
+		playerC.position.y = 0;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+		playerC.position.x = 100;
+		playerC.position.y = 0;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+		playerC.position.x = 0;
+		playerC.position.y = 50;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+		playerC.position.x = 0;
+		playerC.position.y = 100;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+	}
+
+
+
+
+}

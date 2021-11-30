@@ -20,21 +20,14 @@ struct character playerC;
 
 int* FB_POINTER  = XPAR_AXI_APB_BRIDGE_0_BASEADDR + 65536;
 
-unsigned int characterPixels[16][15] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0, 0x2A, 0x2A, 0x2A, 0x2A, 0x2A, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0x2A, 0x2A, 0x2A, 0x2A, 0x0B, 0x3F, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0x0B, 0x2A, 0x0B, 0x0B, 0x0B, 0x39, 0x0B, 0x0B, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0x0B, 0x2A, 0x2A, 0x0B, 0x0B, 0x0B, 0x0B, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0, 0x0B, 0x0B, 0x0B, 0x0B, 0, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0x23, 0x23, 0x23, 0x23, 0, 0, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0, 0x05, 0x05, 0x05, 0, 0, 0, 0, 0, 0, 0, 0,
-										 0, 0, 0, 0, 0, 0x05, 0x05, 0x05, 0x05, 0, 0, 0, 0, 0, 0, 0};
+unsigned int characterPixels[8][8] = { 	0, 0, 0, 0x23, 0x23, 0x23, 0, 0,
+										0x23, 0, 0, 0x0B, 0x0B, 0, 0, 0x23,
+										0x23, 0x23, 0, 0x0B, 0x0B, 0, 0x23, 0x23,
+										0, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0,
+										0, 0, 0, 0x23, 0x23, 0, 0, 0,
+										0, 0, 0x3F, 0x3F, 0x3F, 0x3F, 0, 0,
+										0, 0x3F, 0x3F, 0, 0, 0x3F, 0x3F, 0,
+										0x3F, 0x3F, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F};
 
 unsigned int deployedBoxes = 0;
 
@@ -88,14 +81,14 @@ void objectToFB(struct coords coordinates){
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////////
-void characterToFB(unsigned int** rgbMap, struct coords coordinates){
+void characterToFB(unsigned int rgbMap[8][8], struct coords coordinates){
 	unsigned int m = 0;
 	unsigned int n = 0;
 	int* rowPtr = FB_POINTER + coordinates.y * 160;
 
 
-	for(n = 0; n < 15; n++){
-		for(m = 0; m < 16; m++){
+	for(n = 0; n < 8; n++){
+		for(m = 0; m < 8; m++){
 			*(rowPtr + coordinates.x + m) = rgbMap[m][n];
 		}
 		rowPtr += 160;

@@ -33,7 +33,7 @@ extern struct object boxesArray[BOXES_COUNT];
 // Declare character variable.
 extern struct character playerC;
 // Declare player character bitmap.
-extern unsigned int characterPixels[16][15];
+extern unsigned int characterPixels[8][8];
 // Declare a variable that counts how many boxes are deployed. This can be used
 // as a limit for indexing the boxesArray. Objects with a lower index than this
 // number are all deployed. No objects with a higher index are deployed. In case
@@ -73,7 +73,7 @@ void objectToFB(struct coords coordinates);
  * 				coordinates of the first pixel in the bitmap
  * OUTPUTS: none
  * */
-void characterToFB(unsigned int** rgbMap, struct coords coordinates);
+void characterToFB(unsigned int rgbMap[8][8], struct coords coordinates);
 
 /*
  * The deployBox function takes a position and puts a previously undeployed object in
