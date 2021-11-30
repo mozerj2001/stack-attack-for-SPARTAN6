@@ -30,13 +30,17 @@ struct coords {
  * The position variable itself represents the location of the top left pixel (0th element
  * of the bitmap array).
  * If isFalling is 1, then the object is in falling state, if 0, then it is still.
- * If isDeployed is 1, then the object will be drawn to the given coordinates. Elsewise it won't "exist" in-game.
+ * isHorizontallyBlocked is 1, if the box can't move in any horizontal direction,
+ * because an object or the screen border is blocking its way. There is no need to
+ * make a distinction between right and left, as a box with either side blocked
+ * can't be moved anymore.
  * */
 
 struct object {
 	struct coords position;
+	int hspeed;
 	int isFalling;
-	int isDeployed;
+	int isHorizontallyBlocked;
 };
 
 
@@ -47,7 +51,9 @@ struct object {
  * vspeed represents the vertical speed of the character.
  * hspeed represents the horizontal speed of the character.
  * isFalling is 1 when the character is in free fall, 0 when it is on the ground.
- * This determines whether a vertical acceleration will be applied to its speed each cycle
+ * This determines whether a vertical acceleration will be applied to its speed each cycle.
+ * isLeftBlocked and isRightBlocked are 1, if the character can't move in that direction,
+ * because an object or the screen border is blocking its way.
  * or not.
  * pixels stores the raw RGB data of each pixel of the object.
  * */
@@ -57,6 +63,8 @@ struct character {
 	int hspeed;
 	int vspeed;
 	int isFalling;
+	int isLeftBlocked;
+	int isRightBlocked;
 	unsigned int pixels[10][10];
 };
 

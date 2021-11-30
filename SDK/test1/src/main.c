@@ -15,20 +15,14 @@ int main()
 	int i;
 	int k = 0;
 
+	// random numbers for deployment test
+	int posGen1 = 0;
+	int genCounter = 0;
+	struct coords deploymentTestLoc;
 
 	*(LED_PTR+1) = 0x0;
 
 	setupObjects();
-
-	boxesArray[0].position.x = 50;
-	boxesArray[0].position.y = 50;
-	boxesArray[1].position.x = 100;
-	boxesArray[1].position.y = 60;
-	boxesArray[2].position.x = 0;
-	boxesArray[2].position.y = 80;
-
-
-
 
 
 	while(1)
@@ -38,105 +32,73 @@ int main()
 		*DIG1_PTR = (cntr >> 4) & 0xF;		// counter shifted by 4, then masked
 		cntr++;
 
+
 		for(k = 0; k < 19200; k++){
 			*(FB_POINTER+k) = 0x00;
 		}
+		// Deploy 4 test boxes.
+		if(genCounter == 0){
+			/*deploymentTestLoc.x = 0;
+			deploymentTestLoc.y = 0;
+			deployBox(deploymentTestLoc);
+			deploymentTestLoc.x = 30;
+			deployBox(deploymentTestLoc);
+			deploymentTestLoc.x = 60;
+			deployBox(deploymentTestLoc);
+			deploymentTestLoc.x = 90;
+			deployBox(deploymentTestLoc);*/
 
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[0].position);
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[1].position);
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[2].position);
-
-		for (i=0; i<10000000; i++);
-
-		characterToFB(playerC.pixels, playerC.position);
-
-		for (i=0; i<10000000; i++);
-		//===============================================//
-		for(k = 0; k < 19200; k++){
-			*(FB_POINTER+k) = 0x03;
+			boxesArray[0].position.x = 10;
+			boxesArray[0].position.y = 10;
+			/*boxesArray[1].position.x = 30;
+			boxesArray[1].position.y = 0;
+			boxesArray[2].position.x = 60;
+			boxesArray[2].position.y = 0;
+			boxesArray[3].position.x = 90;
+			boxesArray[3].position.y = 0;*/
 		}
 
-		for (i=0; i<5000000; i++);
+		//updateStates();
+		//updatePositions();
 
 		objectToFB(boxesArray[0].position);
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[1].position);
-
-		for (i=0; i<5000000; i++);
-
+		/*objectToFB(boxesArray[1].position);
 		objectToFB(boxesArray[2].position);
+		objectToFB(boxesArray[3].position);*/
 
-		for (i=0; i<10000000; i++);
-
-		characterToFB(playerC.pixels, playerC.position);
-
-		for (i=0; i<10000000; i++);
-		//===============================================//
-
-		for(k = 0; k < 19200; k++){
-			*(FB_POINTER+k) = 0xB0;
-		}
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[0].position);
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[1].position);
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[2].position);
-
-		for (i=0; i<10000000; i++);
-
-		characterToFB(playerC.pixels, playerC.position);
-
-		for (i=0; i<10000000; i++);
-		//===============================================//
-
-		for(k = 0; k < 19200; k++){
-			*(FB_POINTER+k) = 0x30;
-		}
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[0].position);
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[1].position);
-
-		for (i=0; i<5000000; i++);
-
-		objectToFB(boxesArray[2].position);
-
-		for (i=0; i<10000000; i++);
-
-		characterToFB(playerC.pixels, playerC.position);
-
-		for (i=0; i<10000000; i++);
-
-		// writing to the Frame Buffer
-		/*for(i = 0; i < BOXES_COUNT; i++){
+		/*
+		for(i = 0; i < deployedBoxes; i++){
 			objectToFB(boxesArray[i].position);
 		}*/
-		//characterToFB(playerC.pixels, playerC.position);
 
-		//characterToFB(playerC.pixels, playerC.position);
-		//objectToFB(boxesArray[0].position);
+		delay(100);
 
+		genCounter++;
 	}
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
