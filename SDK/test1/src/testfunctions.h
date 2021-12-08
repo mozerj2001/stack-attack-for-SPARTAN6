@@ -11,6 +11,7 @@
 void testFall();
 void testStacking();
 void testCharacterDrawing();
+void testCharacterMovement();
 
 
 #endif /* TESTFUNCTIONS_H_ */

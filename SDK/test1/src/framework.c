@@ -11,6 +11,7 @@
 #include "xparameters.h"
 #include "structures.h"
 #include "framework.h"
+#include "movement.h"
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -18,7 +19,7 @@ struct object boxesArray[BOXES_COUNT];
 
 struct character playerC;
 
-int* FB_POINTER  = XPAR_AXI_APB_BRIDGE_0_BASEADDR + 65536;
+int* FB_POINTER  = XPAR_AXI_APB_BRIDGE_0_BASEADDR + 131072;
 
 unsigned int characterPixels[8][8] = { 	0, 0, 0, 0x23, 0x23, 0x23, 0, 0,
 										0x23, 0, 0, 0x0B, 0x0B, 0, 0, 0x23,
@@ -31,7 +32,9 @@ unsigned int characterPixels[8][8] = { 	0, 0, 0, 0x23, 0x23, 0x23, 0, 0,
 
 unsigned int deployedBoxes = 0;
 
+unsigned int groundLevelY = 90;
 
+unsigned int verticalAcceleration = 2;
 
 ///////////////////////////////////////////////////////////////////////////////////
 void delay(unsigned int x){
@@ -89,7 +92,7 @@ void characterToFB(unsigned int rgbMap[8][8], struct coords coordinates){
 
 	for(n = 0; n < 8; n++){
 		for(m = 0; m < 8; m++){
-			*(rowPtr + coordinates.x + m) = rgbMap[m][n];
+			*(rowPtr + coordinates.x + m) = rgbMap[n][m];
 		}
 		rowPtr += 160;
 	}
@@ -111,7 +114,7 @@ void updateStates(){
 
 	for(; i < deployedBoxes; i++){
 
-		if(boxesArray[i].position.y == 90){
+		if(boxesArray[i].position.y == groundLevelY){
 			boxesArray[i].isFalling = 0;
 		}
 		else{
@@ -130,6 +133,15 @@ void updateStates(){
 			}
 		}
 	}
+
+	playerC.isFalling = isCFalling();
+
+	if(playerC.isFalling == 1){
+		playerC.vspeed += verticalAcceleration;
+	}
+	else{
+		playerC.vspeed = 0;
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////////
 void updatePositions(){
@@ -143,8 +155,25 @@ void updatePositions(){
 			boxesArray[i].position.x += boxesArray[i].hspeed;
 		}
 	}
-}
 
+	if(((playerC.position.x + playerC.hspeed) >= 0) && ((playerC.position.x + playerC.hspeed) <= 152)){
+		playerC.position.x += playerC.hspeed;
+	}
+	if(playerC.isFalling && ((playerC.position.y + playerC.vspeed) > 0)){
+		playerC.position.y += playerC.vspeed;
+	}
+}
+///////////////////////////////////////////////////////////////////////////////////
+unsigned int isCFalling(){
+	unsigned int i;
+
+	for(i = 0; i < deployedBoxes; i++){
+		if(((playerC.position.x - boxesArray[i].position.x) < 8 && (playerC.position.y - boxesArray[i].position.y <= 8)) || playerC.position.y == groundLevelY){
+			return 0;
+		}
+	}
+	return 1;
+}
 
 
 

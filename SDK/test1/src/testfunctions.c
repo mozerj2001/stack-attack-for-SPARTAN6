@@ -79,6 +79,7 @@ void testStacking(){
 			*(FB_POINTER+k) = 0x03;
 		}
 
+
 		// Deploy 4 test boxes.
 		if(genCounter == 0){
 			deploymentTestLoc.x = 0;
@@ -90,6 +91,8 @@ void testStacking(){
 			deployBox(deploymentTestLoc);
 			deploymentTestLoc.x = 90;
 			deployBox(deploymentTestLoc);
+			playerC.position.x = 100;
+			playerC.position.y = 50;
 		}
 
 		if(genCounter == 20){
@@ -128,16 +131,16 @@ void testStacking(){
 			deployBox(deploymentTestLoc);
 		}
 
+
+
+
 		updateStates();
 		updatePositions();
-
-		/*for(i = 0; i < deployedBoxes; i++){
-			boxesArray[i].position.y += 4;
-		}*/
 
 		for(i = 0; i < deployedBoxes; i++){
 			objectToFB(boxesArray[i].position);
 		}
+		characterToFB(characterPixels, playerC.position);
 
 		delay(30);
 
@@ -180,7 +183,37 @@ void testCharacterDrawing(){
 		delay(100);
 	}
 
+void testCharacterMovement(){
+	int cntr = 0;
+	int i;
+	int k = 0;
+	int genCounter = 0;
+	struct coords deploymentTestLoc;
 
+	setupObjects();
+	while(1){
+		playerC.position.x = 0;
+		playerC.position.y = 0;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+		playerC.position.x = 50;
+		playerC.position.y = 0;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+		playerC.position.x = 100;
+		playerC.position.y = 0;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+		playerC.position.x = 0;
+		playerC.position.y = 50;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+		playerC.position.x = 0;
+		playerC.position.y = 100;
+		characterToFB(characterPixels, playerC.position);
+		delay(100);
+	}
+}
 
 
 }

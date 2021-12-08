@@ -8,6 +8,7 @@
  *  enables and handles writing to the screen.
  *  List:	*declaration of global object and character structures
  *  		*declaration of the following functions:
+ *  			- delay
  *  			- setupObjects
  *  			- objectToFB
  *  			- characterToFB
@@ -39,6 +40,11 @@ extern unsigned int characterPixels[8][8];
 // number are all deployed. No objects with a higher index are deployed. In case
 // boxes are removed from the screen, the entire boxesArray will be reorganized.
 extern unsigned int deployedBoxes;
+
+// Declare global variable to determine the ground level
+extern unsigned int groundLevelY;
+// Declare global variable of freefall acceleration
+extern unsigned int verticalAcceleration;
 
 /*
  * The delay function is a generic delay function that idles the processor
@@ -104,7 +110,13 @@ void updateStates();
  * */
 void updatePositions();
 
-
+/*
+ * The cFall function checks if the character is falling and adjusts
+ * the values of the character struct accordingly.
+ * INPUT: none
+ * OUTPUT: none
+ * */
+unsigned int isCFalling();
 
 #endif /* FRAMEWORK_H_ */
 
