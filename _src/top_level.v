@@ -126,7 +126,7 @@ wire [5:0] dout;				// to VGA pins
 wire write_enable;			// from processor to VGA controller
  
 // Write frame buffer if the bus is in write mode and the Frame Buffer's memory address is selected.
-assign write_enable = (apb_write == 1'b1) & (M_APB_PADDR[30:16] == 1);
+assign write_enable = (apb_write == 1'b1) & (M_APB_PADDR[30:17] == 1);
 
 
 vga_controller vga_ctrl(
@@ -142,16 +142,24 @@ vga_controller vga_ctrl(
 	 
 	 .write_enable		(write_enable),
 	 .din					(M_APB_PWDATA[5:0]),
-	 .din_address		(M_APB_PADDR[15:2])
+	 .din_address		(M_APB_PADDR[16:2])
     );
 	 
 // assign outputs to wires to pins
+reg [5:0] top_dout;
+always @ (posedge clk)
+begin
+	if(~BLANK)
+		top_dout <= dout;
+	else
+		top_dout <= 6'h0;
+end
 	
-assign b0 = dout[5];
-assign b1 = dout[4];
-assign g0 = dout[3];
-assign g1 = dout[2];
-assign r0 = dout[1];
-assign r1 = dout[0];
+assign b0 = top_dout[5];
+assign b1 = top_dout[4];
+assign g0 = top_dout[3];
+assign g1 = top_dout[2];
+assign r0 = top_dout[1];
+assign r1 = top_dout[0];
 
 endmodule
