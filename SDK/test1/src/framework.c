@@ -59,6 +59,7 @@ void setupObjects(){
 	playerC.vspeed = 0;
 	playerC.hspeed = 0;
 	playerC.isFalling = 0;
+	playerC.jumpStart = 0;
 	for(m = 0; m < 10; m++){
 		for(n = 0; n < 10; n++){
 			playerC.pixels[m][n] = characterPixels[m][n];
@@ -111,6 +112,8 @@ void deployBox(struct coords depPosition){
 void updateStates(){
 	unsigned int i = 0;
 	unsigned int k;
+	int deltaX;
+	int deltaY;
 
 	for(; i < deployedBoxes; i++){
 
@@ -127,14 +130,24 @@ void updateStates(){
 
 		if(boxesArray[i].isHorizontallyBlocked == 0){
 			for(k = 0; k < deployedBoxes; k++){
+				deltaX = playerC.position.x - boxesArray[i].position.x;
+				deltaY = playerC.position.y - boxesArray[i].position.y;
+
 				if(boxesArray[i].position.y == boxesArray[k].position.y && ((boxesArray[i].position.x - boxesArray[k].position.x) <= 8 && (boxesArray[i].position.x - boxesArray[k].position.x) >= -8)){
 					boxesArray[i].isHorizontallyBlocked = 1;
+				}
+
+				if((deltaY >= 0) && (deltaY <= 8)){
+					if(((deltaX < 0) && (deltaX >= -8) && (playerC.hspeed > 0)) || ((deltaX > 0) && (deltaX <= 8) && (playerC.hspeed < 0))){
+						playerC.hspeed = 0;
+					}
 				}
 			}
 		}
 	}
 
 	playerC.isFalling = isCFalling();
+	playerC.jumpStart = 0;
 
 	if(playerC.isFalling == 1){
 		playerC.vspeed += verticalAcceleration;
@@ -159,19 +172,34 @@ void updatePositions(){
 	if(((playerC.position.x + playerC.hspeed) >= 0) && ((playerC.position.x + playerC.hspeed) <= 152)){
 		playerC.position.x += playerC.hspeed;
 	}
-	if(playerC.isFalling && ((playerC.position.y + playerC.vspeed) > 0)){
+	if((playerC.position.y + playerC.vspeed) <= groundLevelY && ((playerC.position.y + playerC.vspeed) > 0)){
 		playerC.position.y += playerC.vspeed;
+	}
+	else if((playerC.position.y + playerC.vspeed) > groundLevelY){
+		playerC.position.y = groundLevelY;
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////////
 unsigned int isCFalling(){
 	unsigned int i;
+	int deltaX;
+	int deltaY;
+
+	if(playerC.jumpStart == 1){
+		playerC.isFalling = 1;
+		return 1;
+	}
+	else if(playerC.position.y >= groundLevelY){ return 0; }
 
 	for(i = 0; i < deployedBoxes; i++){
-		if(((playerC.position.x - boxesArray[i].position.x) < 8 && (playerC.position.y - boxesArray[i].position.y <= 8)) || playerC.position.y == groundLevelY){
+		deltaX = playerC.position.x - boxesArray[i].position.x;
+		deltaY = playerC.position.y - boxesArray[i].position.y;
+
+		if((deltaX < 8) && (deltaY <= 8)){
 			return 0;
 		}
 	}
+
 	return 1;
 }
 

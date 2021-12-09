@@ -97,16 +97,16 @@ void deployBox(struct coords depPosition);
  * INPUT: none
  * OUTPUT: none
  *
- * TODO: Optimization. This is currently an n^2 alogithm.
+ * TODO: Optimization. This is currently an n^2 algorithm.
  * */
 void updateStates();
 
 /*
  * The updatePositions function checks the movement states of each object and
  * the player character and updates their location accordingly. This should be called
- * every cycle to ensure smooth movement.
- * INPUTS: none
- * OUTPUTS: none
+ * every cycle to ensure smooth movement. It should only be called after updateStates.
+ * INPUT: none
+ * OUTPUT: none
  * */
 void updatePositions();
 

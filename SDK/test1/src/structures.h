@@ -63,6 +63,7 @@ struct character {
 	int hspeed;
 	int vspeed;
 	int isFalling;
+	int jumpStart;
 	int isLeftBlocked;
 	int isRightBlocked;
 	unsigned int pixels[8][8];
