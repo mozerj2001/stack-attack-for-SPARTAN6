@@ -29,6 +29,12 @@
 // Declare global pointer to the starting address of the frame buffer.
 extern int* FB_POINTER;
 
+// Declare global pointer for the navi switch.
+extern int* NAVI_POINTER;
+
+// Declare global pointer for BLANK signal.
+extern int* BLANK_POINTER;
+
 // Declare object variables.
 extern struct object boxesArray[BOXES_COUNT];
 // Declare character variable.

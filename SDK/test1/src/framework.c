@@ -21,6 +21,10 @@ struct character playerC;
 
 int* FB_POINTER  = XPAR_AXI_APB_BRIDGE_0_BASEADDR + 131072;
 
+int* NAVI_POINTER = XPAR_AXI_APB_BRIDGE_0_BASEADDR;
+
+int* BLANK_POINTER = XPAR_AXI_APB_BRIDGE_0_BASEADDR + 16884;
+
 unsigned int characterPixels[8][8] = { 	0, 0, 0, 0x23, 0x23, 0x23, 0, 0,
 										0x23, 0, 0, 0x0B, 0x0B, 0, 0, 0x23,
 										0x23, 0x23, 0, 0x0B, 0x0B, 0, 0x23, 0x23,
@@ -195,7 +199,8 @@ unsigned int isCFalling(){
 		deltaX = playerC.position.x - boxesArray[i].position.x;
 		deltaY = playerC.position.y - boxesArray[i].position.y;
 
-		if((deltaX < 8) && (deltaY <= 8)){
+		if(((deltaX < 8) && (deltaX > -8)) && (deltaY >= -8)){
+			playerC.position.y -= (deltaY + 8);
 			return 0;
 		}
 	}

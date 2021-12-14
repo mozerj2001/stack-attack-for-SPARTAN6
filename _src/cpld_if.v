@@ -14,6 +14,7 @@ module cpld_if(
   output wire cpld_clk,
   output wire cpld_load,
   output wire cpld_mosi,
+  output wire [15:0] miso_out_array,
   input  wire cpld_miso
 );
 
@@ -77,6 +78,7 @@ always @ (posedge clk)
 if (cpld_clk_fall & cpld_load)
 	miso_out_reg <= miso_shr;
 	
+assign miso_out_array = miso_out_reg;
 assign sw = miso_out_reg[7:0];
 
 endmodule

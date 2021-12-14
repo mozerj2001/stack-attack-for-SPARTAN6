@@ -21,9 +21,6 @@ int main(void)
 
 
 		while(1){
-			for(k = 0; k < 19200; k++){
-				*(FB_POINTER+k) = 0x03;
-			}
 			//if(cntr % 30 == 0){ playerC.hspeed -= 2*playerC.hspeed; }
 			if(cntr == 0){
 				deploymentTestLoc.x = 20;
@@ -79,17 +76,24 @@ int main(void)
 				deployBox(deploymentTestLoc);*/
 
 			}
-			if(cntr > 100){ playerC.hspeed = 4; }
+			/*if(cntr > 100){ playerC.hspeed = 4; }
 			if(cntr == 100){ jumpC(); }
 			if(cntr == 150){ jumpC(); }
-			if(cntr == 200){ jumpC(); }
+			if(cntr == 200){ jumpC(); }*/
+
+			readNavi();
 			updateStates();
 			updatePositions();
-			characterToFB(characterPixels, playerC.position);
-			for(i = 0; i < deployedBoxes; i++){
-				objectToFB(boxesArray[i].position);
-			}
-			delay(20);
+			while((*BLANK_POINTER) == 0){}
+				for(k = 0; k < 19200; k++){
+					*(FB_POINTER+k) = 0x03;
+				}
+				characterToFB(characterPixels, playerC.position);
+				for(i = 0; i < deployedBoxes; i++){
+					objectToFB(boxesArray[i].position);
+				}
+			delay(5);
+
 			cntr++;
 		}
 }

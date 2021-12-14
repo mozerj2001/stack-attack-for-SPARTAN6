@@ -29,7 +29,8 @@ module top_level(
   
   output wire hsync,
   output wire vsync,
-  output wire BLANK
+  output wire BLANK,
+  output wire SUPER_BLANK
   
 );
 
@@ -52,6 +53,7 @@ reg [31:0] M_APB_PRDATA;		// reg, hogy multiplexálhassunk vele, de így is kombin
 wire M_APB_PSLVERR;
 wire [7:0] led;
 wire [7:0] sw;
+wire [15:0] miso_out_array;
 
 assign M_APB_PSLVERR = 1'b0;
 
@@ -61,10 +63,14 @@ assign apb_write = M_APB_PSEL & M_APB_PENABLE & M_APB_PWRITE;
 // APB bus is ready to interact when it has selected the periphery and enabled it.	
 assign M_APB_PREADY = M_APB_PSEL & M_APB_PENABLE;
 
+wire apb_read;
+// APB bus has selected the chip, enabled the chip and has a passive write signal.
+assign apb_read = M_APB_PSEL & M_APB_PENABLE & ~M_APB_PWRITE;
+
 reg [3:0] dig[1:0];
 
 // regiszterírás (digitek címtartományának kiválasztása)
-always @ (posedge clk)
+/*always @ (posedge clk)
 begin
 	if(apb_write == 1'b1 & M_APB_PADDR[30:14] == 0)
 	begin
@@ -74,15 +80,15 @@ begin
 	begin
 		dig[1] <= M_APB_PWDATA[3:0];
 	end
-end
+end*/
 
 // címdekódoló multiplexer leírása
-always @ (*)
+/*always @ (*)
 case(M_APB_PADDR[30:14])
 	17'h0: M_APB_PRDATA <= {28'b0, dig[0]};
 	17'h1: M_APB_PRDATA <= {28'b0, dig[1]};
 	default: M_APB_PRDATA <= 32'b0;
-endcase
+endcase*/
 
 
 assign rst = ~rstbt;
@@ -115,6 +121,7 @@ cpld_if cpld_if_i(
   .cpld_clk         (cpld_clk),
   .cpld_load        (cpld_load),
   .cpld_mosi        (cpld_mosi),
+  .miso_out_array	  (miso_out_array),
   .cpld_miso        (cpld_miso)
 );
 
@@ -136,6 +143,7 @@ vga_controller vga_ctrl(
 	 .hsync				(hsync),
 	 .vsync				(vsync),
 	 .BLANK				(BLANK),
+	 .SUPER_BLANK		(SUPER_BLANK),
 	 //.h_end				(h_end),
 
 	 .dout				(dout),
@@ -161,5 +169,41 @@ assign g0 = top_dout[3];
 assign g1 = top_dout[2];
 assign r0 = top_dout[1];
 assign r1 = top_dout[0];
+
+// Extract the navi values from cpld_mosi
+reg navi_cntr;
+reg [4:0] navi_values;
+
+// Count cpld_mosi cycles
+always @ (posedge clk)
+begin
+if(cpld_clk)
+begin
+	if(cpld_load)
+		navi_cntr <= 0;
+	else
+		navi_cntr <= navi_cntr + 1;
+end
+end
+
+// Fill navi value register with the appropriate values
+
+
+// Make navi_values readable from software
+// regiszterírás (digitek címtartományának kiválasztása)
+wire [31:0] navi_out;
+assign navi_out[31:0] = {27'h0, miso_out_array[12:8]};
+
+always @ (*)
+begin
+	case(M_APB_PADDR[30:14])
+		17'h0: M_APB_PRDATA <= navi_out;
+		17'b00000000000000001: M_APB_PRDATA <= {31'h0, SUPER_BLANK};
+		default: M_APB_PRDATA <= 32'b0;
+	endcase
+	dig[0] <= navi_out[3:0];
+	dig[1] <= navi_out[7:4];
+end
+
 
 endmodule

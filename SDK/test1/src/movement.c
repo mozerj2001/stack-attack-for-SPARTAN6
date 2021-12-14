@@ -23,3 +23,28 @@ void jumpC(){
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////////
+void readNavi(){
+	unsigned int naviValue = (*NAVI_POINTER);
+
+	switch(naviValue){
+		case 1:
+			jumpC();
+			break;
+		case 4:
+			playerC.hspeed = -4;
+			break;
+		case 8:
+			playerC.hspeed = 4;
+			break;
+		case 5:
+			playerC.hspeed = -4;
+			jumpC();
+			break;
+		case 9:
+			playerC.hspeed = 4;
+			jumpC();
+			break;
+		default:
+			playerC.hspeed = 0;
+	}
+}
