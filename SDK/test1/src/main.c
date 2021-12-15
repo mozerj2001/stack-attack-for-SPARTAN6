@@ -15,7 +15,6 @@ int main(void)
 
 
 		setupObjects();
-		//playerC.hspeed = 4;
 		playerC.position.x = 0;
 		playerC.position.y = 50;
 
@@ -26,7 +25,7 @@ int main(void)
 				deploymentTestLoc.x = 20;
 				deploymentTestLoc.y = 40;
 				deployBox(deploymentTestLoc);
-				deploymentTestLoc.x = 28;
+				/*deploymentTestLoc.x = 28;
 				deploymentTestLoc.y = 40;
 				deployBox(deploymentTestLoc);
 				deploymentTestLoc.x = 36;
@@ -50,6 +49,9 @@ int main(void)
 				deploymentTestLoc.x = 68;
 				deploymentTestLoc.y = 10;
 				deployBox(deploymentTestLoc);
+				deploymentTestLoc.x = 68;
+				deploymentTestLoc.y = 0;
+				deployBox(deploymentTestLoc);*/
 				/*deploymentTestLoc.x = 76;
 				deploymentTestLoc.y = 40;
 				deployBox(deploymentTestLoc);
@@ -85,13 +87,16 @@ int main(void)
 			updateStates();
 			updatePositions();
 			while((*BLANK_POINTER) == 0){}
-				for(k = 0; k < 19200; k++){
-					*(FB_POINTER+k) = 0x03;
-				}
-				characterToFB(characterPixels, playerC.position);
-				for(i = 0; i < deployedBoxes; i++){
-					objectToFB(boxesArray[i].position);
-				}
+			for(k = 0; k < 17280; k++){
+				*(FB_POINTER+k) = 0x00;
+			}
+			for(; k < 19200; k++){
+				*(FB_POINTER+k) = 0x0c;
+			}
+			characterToFB(characterPixels, playerC.position);
+			for(i = 0; i < deployedBoxes; i++){
+				objectToFB(boxesArray[i].position);
+			}
 			delay(5);
 
 			cntr++;
