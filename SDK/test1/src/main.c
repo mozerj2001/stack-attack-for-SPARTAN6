@@ -33,7 +33,7 @@ int main(void)
 				deployBox(deploymentTestLoc);
 				deploymentTestLoc.x = 44;
 				deploymentTestLoc.y = 40;
-				deployBox(deploymentTestLoc);
+				deployBox(deploymentTestLoc);*/
 				deploymentTestLoc.x = 52;
 				deploymentTestLoc.y = 40;
 				deployBox(deploymentTestLoc);
@@ -43,7 +43,7 @@ int main(void)
 				deploymentTestLoc.x = 60;
 				deploymentTestLoc.y = 10;
 				deployBox(deploymentTestLoc);
-				deploymentTestLoc.x = 68;
+				/*deploymentTestLoc.x = 68;
 				deploymentTestLoc.y = 40;
 				deployBox(deploymentTestLoc);
 				deploymentTestLoc.x = 68;
@@ -51,7 +51,7 @@ int main(void)
 				deployBox(deploymentTestLoc);
 				deploymentTestLoc.x = 68;
 				deploymentTestLoc.y = 0;
-				deployBox(deploymentTestLoc);*/
+				deployBox(deploymentTestLoc);
 				/*deploymentTestLoc.x = 76;
 				deploymentTestLoc.y = 40;
 				deployBox(deploymentTestLoc);

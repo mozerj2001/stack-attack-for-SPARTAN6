@@ -129,12 +129,13 @@ void updateStates(){
 		}
 		else{
 			for(k = 0; k < deployedBoxes; k++){
-				if(i != k && ((boxesArray[i].position.x / 8) == (boxesArray[k].position.x / 8)) && (boxesArray[k].position.y - boxesArray[i].position.y) <= 8){
+				if((i != k) && ((boxesArray[i].position.x / 8) == (boxesArray[k].position.x / 8)) && (boxesArray[k].position.y - boxesArray[i].position.y) <= 8){
 					boxesArray[i].isFalling = 0;
+					break;
 				}
-				/*else{
+				else{
 					boxesArray[i].isFalling = 1;
-				}*/
+				}
 			}
 		}
 
@@ -145,7 +146,10 @@ void updateStates(){
 		else{
 			for(k = 0; k < deployedBoxes; k++){
 
-				if(((deltaY == 0) && ((deltaX == 8) || (deltaX == -8))) && i != k){
+				deltaX = boxesArray[k].position.x - boxesArray[i].position.x;
+				deltaY = boxesArray[k].position.y - boxesArray[i].position.y;
+
+				if(((deltaY == 0) && ((deltaX == 8) || (deltaX == -8))) && (i != k)){
 					boxesArray[i].isHorizontallyBlocked = 1;
 					break;
 				}
@@ -153,29 +157,11 @@ void updateStates(){
 			}
 		}
 
+		deltaX = playerC.position.x - boxesArray[i].position.x;
+		deltaY = playerC.position.y - boxesArray[i].position.y;
 
-		/*if(boxesArray[i].isHorizontallyBlocked == 0){
-			for(k = 0; k < deployedBoxes; k++){
-				deltaX = playerC.position.x - boxesArray[i].position.x;
-				deltaY = playerC.position.y - boxesArray[i].position.y;
-
-				if(boxesArray[i].position.y == boxesArray[k].position.y && ((boxesArray[i].position.x - boxesArray[k].position.x) <= 8 && (boxesArray[i].position.x - boxesArray[k].position.x) >= -8)){
-					boxesArray[i].isHorizontallyBlocked = 1;
-				}
-
-				if((deltaY >= 0) && (deltaY <= 8)){
-					if(((deltaX < 0) && (deltaX >= -8) && (playerC.hspeed > 0)) || ((deltaX > 0) && (deltaX <= 8) && (playerC.hspeed < 0))){
-						if(boxesArray[i].isHorizontallyBlocked == 1){ playerC.hspeed = 0; }
-						else{
-							boxesArray[i].position.x += playerC.hspeed;
-						}
-					}
-				}
-			}
-		}*/
-
-		if((deltaY >= 0) && (deltaY <= 8)){
-			if(((deltaX < 0) && (deltaX == -8) && (playerC.hspeed > 0)) || ((deltaX > 0) && (deltaX == 8) && (playerC.hspeed < 0))){
+		if((deltaY < 8) && (deltaY >= 0)){
+			if(((deltaX == -8) && (playerC.hspeed > 0)) || ((deltaX == 8) && (playerC.hspeed < 0))){
 				if(boxesArray[i].isHorizontallyBlocked == 1){ playerC.hspeed = 0; }
 				else{
 					boxesArray[i].position.x += playerC.hspeed;
