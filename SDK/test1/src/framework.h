@@ -2,7 +2,7 @@
  * framework.h
  *
  *  Created on: Nov 24, 2021
- *      Author: József Mózer
+ *      Author: JÃ³zsef MÃ³zer
  *
  *  This header file contains the declaration of all functionality that
  *  enables and handles writing to the screen.
@@ -24,7 +24,7 @@
 
 
 // How many boxes the game can handle.
-#define BOXES_COUNT 10 // Number of 8x8 objects to fit on the screen.
+#define BOXES_COUNT 100 // Number of 8x8 objects to fit on the screen.
 
 // Declare global pointer to the starting address of the frame buffer.
 extern int* FB_POINTER;
