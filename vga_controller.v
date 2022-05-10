@@ -27,7 +27,7 @@ module vga_controller(
     output reg [5:0] dout,			//RGB
 		// input data and its address
 	 input wire [5:0] din,
-	 input wire [13:0] din_address
+	input wire [14:0] din_address
     );
 
 
@@ -178,7 +178,7 @@ begin
 	else if((VSYNC_COUNTER < 480) & ce & hsync_OverFlow & (VSYNC_COUNTER[1:0] == 2'b10)) 
 		start_cntr <= start_cntr + 160;
 	else if (ce & (VSYNC_COUNTER == 520) & hsync_OverFlow)
-		start_cntr <= 0;	//TODO: visszanullázás a képernyo végén ? --> ez itt megtörténik...
+		start_cntr <= 0;	//TODO: visszanullÃ¡zÃ¡s a kÃ©pernyo vÃ©gÃ©n ? --> ez itt megtÃ¶rtÃ©nik...
 end
 
 /*	Create address counter. This register will load n/4 * 160 at every fourth h_end,
